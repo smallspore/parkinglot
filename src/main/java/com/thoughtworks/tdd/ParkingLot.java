@@ -51,4 +51,8 @@ public class ParkingLot {
 		return car == null ? false : lotsMap.containsKey(car.getNumber());
 	}
 
+	public int residualCapacity() {
+		return this.capacity - this.lotsMap.size();
+	}
+
 }

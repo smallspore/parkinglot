@@ -32,16 +32,21 @@ public class MutiParkingLot {
 		if (containCar(car)) {
 			throw new DuplicateCarNumberException();
 		}
-		for (int i = 0; i < parkingLots.size(); i++) {
+		ParkingLot parkingLot = parkingLots.stream().reduce((pl1, pl2) -> {
+			if (pl1.residualCapacity() >= pl2.residualCapacity()) {
+				return pl1;
+			} else {
+				return pl2;
+			}
+		}).orElse(null);
+		if (parkingLot != null) {
+			int index = parkingLots.indexOf(parkingLot);
 			try {
-				Ticket ticket = parkingLots.get(i).park(car);
-				ticket.setPosition(i);
-				positionsMap.put(ticket, i);
+				Ticket ticket = parkingLot.park(car);
+				ticket.setPosition(index);
+				positionsMap.put(ticket, index);
 				return ticket;
 			} catch (NoLotParkingException e) {
-				if (i < parkingLots.size() - 1) {
-					continue;
-				}
 				throw e;
 			}
 		}
