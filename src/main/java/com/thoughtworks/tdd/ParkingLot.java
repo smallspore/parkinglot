@@ -55,4 +55,12 @@ public class ParkingLot {
 		return this.capacity - this.lotsMap.size();
 	}
 
+	public double vacancyRate() {
+		if (this.capacity > 0) {
+			return (this.capacity - this.lotsMap.size()) / (double) this.capacity;
+		} else {
+			return 0;
+		}
+	}
+
 }

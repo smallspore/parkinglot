@@ -33,7 +33,7 @@ public class MutiParkingLot {
 			throw new DuplicateCarNumberException();
 		}
 		ParkingLot parkingLot = parkingLots.stream().reduce((pl1, pl2) -> {
-			if (pl1.residualCapacity() >= pl2.residualCapacity()) {
+			if (pl1.vacancyRate() >= pl2.vacancyRate()) {
 				return pl1;
 			} else {
 				return pl2;
