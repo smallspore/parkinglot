@@ -18,7 +18,9 @@ class ParkingLotTest {
 
 	@Test
 	void should_return_ticket_when_parking_given_car_number_enough_lots() {
-		Assertions.assertNotNull(mutiParkingLot.park(new Car("ZAZA12345")));
+		Ticket ticket = mutiParkingLot.park(new Car("ZAZA12345"));
+		Assertions.assertNotNull(ticket);
+		Assertions.assertEquals(0, ticket.getPosition());
 	}
 
 	@Test
@@ -30,7 +32,38 @@ class ParkingLotTest {
 	@Test
 	void should_not_return_ticket_when_parking_given_car_number_no_lots() {
 		for (int i = 0; i < 10; i++) {
-			Assertions.assertNotNull(mutiParkingLot.park(new Car("ZAZA1234" + i)));
+			Ticket ticket = mutiParkingLot.park(new Car("ZAZA1234" + i));
+			Assertions.assertNotNull(ticket);
+			int expected = 0;
+			switch (i) {
+			case 0: {
+				expected = 0;
+				break;
+			}
+			case 1:
+			case 2: {
+				expected = 1;
+				break;
+			}
+			case 3:
+			case 4:
+			case 5: {
+				expected = 2;
+				break;
+			}
+			case 6:
+			case 7:
+			case 8:
+			case 9: {
+				expected = 3;
+				break;
+			}
+			default: {
+				expected = 0;
+				break;
+			}
+			}
+			Assertions.assertEquals(expected, ticket.getPosition());
 		}
 		Assertions.assertThrows(NoLotParkingException.class, () -> mutiParkingLot.park(new Car("ZAZA123456")));
 	}

@@ -35,6 +35,7 @@ public class MutiParkingLot {
 		for (int i = 0; i < parkingLots.size(); i++) {
 			try {
 				Ticket ticket = parkingLots.get(i).park(car);
+				ticket.setPosition(i);
 				positionsMap.put(ticket, i);
 				return ticket;
 			} catch (NoLotParkingException e) {
