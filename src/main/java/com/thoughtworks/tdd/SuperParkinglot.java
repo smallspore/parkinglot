@@ -9,20 +9,20 @@ import com.thoughtworks.tdd.exception.CarNotExistParkingException;
 import com.thoughtworks.tdd.exception.DuplicateCarNumberException;
 import com.thoughtworks.tdd.exception.NoLotParkingException;
 
-public class MutiParkingLot {
+public class SuperParkinglot {
 
-	private final List<ParkingLot> parkingLots;
+	private final List<Parkinglot> parkinglots;
 
 	private final Map<Ticket, Integer> positionsMap;
 
-	public MutiParkingLot(ParkingLot... parkingLot) {
-		parkingLots = new ArrayList<ParkingLot>();
+	public SuperParkinglot(Parkinglot... parkingLot) {
+		parkinglots = new ArrayList<Parkinglot>();
 		positionsMap = new HashMap<Ticket, Integer>();
 
 		if (parkingLot != null) {
-			for (ParkingLot pl : parkingLot) {
+			for (Parkinglot pl : parkingLot) {
 				if (pl != null) {
-					parkingLots.add(pl);
+					parkinglots.add(pl);
 				}
 			}
 		}
@@ -32,7 +32,7 @@ public class MutiParkingLot {
 		if (containCar(car)) {
 			throw new DuplicateCarNumberException();
 		}
-		ParkingLot parkingLot = parkingLots.stream().reduce((pl1, pl2) -> {
+		Parkinglot parkingLot = parkinglots.stream().reduce((pl1, pl2) -> {
 			if (pl1.vacancyRate() >= pl2.vacancyRate()) {
 				return pl1;
 			} else {
@@ -40,7 +40,7 @@ public class MutiParkingLot {
 			}
 		}).orElse(null);
 		if (parkingLot != null) {
-			int index = parkingLots.indexOf(parkingLot);
+			int index = parkinglots.indexOf(parkingLot);
 			try {
 				Ticket ticket = parkingLot.park(car);
 				ticket.setPosition(index);
@@ -58,15 +58,15 @@ public class MutiParkingLot {
 			throw new IllegalArgumentException();
 		}
 		Integer position = positionsMap.remove(ticket);
-		if (position == null || parkingLots.size() < position + 1) {
+		if (position == null || parkinglots.size() < position + 1) {
 			throw new CarNotExistParkingException();
 		}
-		Car car = parkingLots.get(position).pick(ticket);
+		Car car = parkinglots.get(position).pick(ticket);
 		return car;
 	}
 
 	private boolean containCar(Car car) {
-		for (ParkingLot parkingLot : parkingLots) {
+		for (Parkinglot parkingLot : parkinglots) {
 			if (parkingLot.containCar(car)) {
 				return true;
 			}

@@ -1,19 +1,19 @@
 package com.thoughtworks.tdd;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.thoughtworks.tdd.exception.CarNotExistParkingException;
 import com.thoughtworks.tdd.exception.DuplicateCarNumberException;
 import com.thoughtworks.tdd.exception.NoLotParkingException;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class ParkingLot {
+public class Parkinglot {
 
 	private final int capacity;
 
 	private Map<String, Car> lotsMap = new HashMap<>();
 
-	public ParkingLot(int capacity) {
+	public Parkinglot(int capacity) {
 		if (capacity < 0) {
 			capacity = 0;
 		}
